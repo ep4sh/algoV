@@ -1,5 +1,5 @@
 module main
 
 fn main() {
-	println('Algorythms and data structures written with V language')
+	println('Algorithms and data structures written in V language')
 }
