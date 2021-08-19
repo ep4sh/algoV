@@ -1,4 +1,4 @@
-// Stack data structure holds stack of elements (FIFO)
+// Stack data structure holds stack of elements (FILO)
 struct Stack {
 mut:
 	items []int

@@ -1,4 +1,4 @@
-// Queue data structure holds queue of elements (FILO)
+// Queue data structure holds queue of elements (FIFO)
 struct Queue {
 mut:
 	items []int
