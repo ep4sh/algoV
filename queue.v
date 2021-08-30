@@ -1,3 +1,10 @@
+/*
+* queue.v
+ * Copyright (C) 2021 Pasha Radchenko <ep4sh2k@gmail.com>
+ *
+ * Distributed under terms of the MIT license.
+*/
+
 // Queue data structure holds queue of elements (FIFO)
 struct Queue {
 mut:

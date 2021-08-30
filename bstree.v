@@ -1,3 +1,10 @@
+/*
+* bstree.v
+ * Copyright (C) 2021 Pasha Radchenko <ep4sh2k@gmail.com>
+ *
+ * Distributed under terms of the MIT license.
+*/
+
 // https://github.com/vlang/v/blob/master/doc/docs.md#structs-with-reference-fields
 struct Empty {}
 
