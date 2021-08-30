@@ -5,7 +5,7 @@
  * Distributed under terms of the MIT license.
 */
 
-// Stack data structure holds stack of elements (FILO)
+// Stack data structure holds stack of elements (LIFO)
 struct Stack {
 mut:
 	items []int
@@ -16,7 +16,7 @@ fn (mut s Stack) push(i int) {
 	s.items << i
 }
 
-// deque removes last element from the stack and returns it
+// pop removes first element from the stack and returns it
 fn (mut s Stack) pop() int {
 	pop_val := s.items.pop()
 	return pop_val
