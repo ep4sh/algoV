@@ -18,7 +18,7 @@ struct BSNode {
 // Tree is a sum type represents binary search tree (combines BSNode and Empty)
 type Tree = BSNode | Empty
 
-// Insert method inserts key into the tree
+// insert performs inserts key into the tree
 fn insert_tree(t Tree, key int) Tree {
 	match t {
 		Empty {
@@ -40,6 +40,31 @@ fn insert_tree(t Tree, key int) Tree {
 				}
 				else {
 					return t // if key == tree's key return itself
+				}
+			}
+		}
+	}
+}
+
+// search performs recursive search of the key in the tree
+fn search_tree(t Tree, key int) bool {
+	return match t {
+		Empty {
+			false
+		}
+		BSNode {
+			match true {
+				key > t.key {
+					search_tree(t.right, key) // keep searching in right branch
+				}
+				key < t.key {
+					search_tree(t.left, key) // keep searching in left branch
+				}
+				key == t.key {
+					true // if key found
+				}
+				else {
+					false // if key not found
 				}
 			}
 		}
@@ -73,6 +98,8 @@ fn main() {
 			})
 		})
 	})
-
 	assert tree == desired_tree
+
+	existing_key := 60
+	assert true == search_tree(desired_tree, existing_key)
 }
