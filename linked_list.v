@@ -10,7 +10,7 @@ struct Empty {}
 // LLNode is struct which holds data and links
 struct LLNode {
 	data int
-	next LinkedList
+	link LinkedList
 }
 
 // LinkedList represent a linked list
@@ -25,7 +25,7 @@ fn insert(ll LinkedList, val int) LinkedList {
 		LLNode {
 			return LLNode{
 				...ll
-				next: insert(ll.next, val)
+				link: insert(ll.link, val)
 			}
 		}
 	}
@@ -40,7 +40,7 @@ fn prepend(ll LinkedList, val int) LinkedList {
 		LLNode {
 			return LLNode{
 				data: val
-				next: ll
+				link: ll
 			}
 		}
 	}
@@ -53,11 +53,11 @@ fn main() {
 	ll = insert(ll, 999)
 	mut desired_ll := LinkedList(LLNode{
 		data: 997
-		next: LinkedList(LLNode{
+		link: LinkedList(LLNode{
 			data: 998
-			next: LinkedList(LLNode{
+			link: LinkedList(LLNode{
 				data: 999
-				next: Empty{}
+				link: Empty{}
 			})
 		})
 	})
