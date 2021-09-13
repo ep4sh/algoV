@@ -23,10 +23,21 @@ fn (mut hs HashTable) init() {
 // hs_insert performs insert into hash table
 fn (mut hs HashTable) hs_insert(s string) int {
 	idx := hash(s)
-	println(idx)
 	hs.arr[idx] = bucket_insert(hs.arr[idx], s)
 	return idx
 }
+
+// hs_search performs search in hash table
+fn (hs HashTable) hs_search(s string) ?string {
+	idx := hash(s)
+	existing_data := bucket_search(hs.arr[idx], s)
+	if existing_data != '' {
+		return existing_data
+	}
+	return error("Key with data '$s' doesn't exist in HashTable")
+}
+
+// hs_delete performs delete of element in hash table
 
 // Bucket is hash table node (linked list)
 type Bucket = BucketNode | Empty
@@ -55,10 +66,21 @@ fn bucket_insert(b Bucket, val string) &Bucket {
 	}
 }
 
-// hs_search performs search in hash table
-// hs_delete performs delete of element in hash table
-
 // bucket_search performs search in node
+fn bucket_search(b Bucket, val string) string {
+	match b {
+		Empty {
+			return ''
+		}
+		BucketNode {
+			return match b.data {
+				val { b.data }
+				else { bucket_search(b.link, val) }
+			}
+		}
+	}
+}
+
 // bucket_delete performs delete of element in the node
 
 fn hash(str string) int {
@@ -72,11 +94,14 @@ fn hash(str string) int {
 fn main() {
 	mut hs := HashTable{}
 	hs.init()
-	hs.hs_insert('pashaa')
-	hs.hs_insert('pashaaa')
-	hs.hs_insert('z')
-	hs.hs_insert('paaa')
-	hs.hs_insert('raaa')
-	hs.hs_insert('raaz')
-	println(hs)
+	hs.hs_insert('deadbeef')
+	hs.hs_insert('coyote')
+	hs.hs_insert('moo')
+	hs.hs_insert('lurker')
+
+	result_1 := hs.hs_search('coyote') or { 'NotFound' }
+	result_2 := hs.hs_search('voodoo') or { 'NotFound' }
+	result_3 := hs.hs_search('yabadibadoo') or { 'NotFound' }
+	assert result_1 == 'coyote'
+	assert result_2 == 'NotFound'
 }
