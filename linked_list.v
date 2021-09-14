@@ -51,6 +51,7 @@ fn main() {
 	ll = insert(ll, 997)
 	ll = insert(ll, 998)
 	ll = insert(ll, 999)
+
 	mut desired_ll := LinkedList(LLNode{
 		data: 997
 		link: LinkedList(LLNode{
@@ -61,5 +62,12 @@ fn main() {
 			})
 		})
 	})
-	assert ll == desired_ll
+
+	assert ll == desired_ll // compare two LinkedLists
+
+	ll = prepend(ll, 123)
+	desired_ll = prepend(desired_ll, 123)
+
+	assert ll == desired_ll // compare prepended LinkedLists
+	println('Desired LinkedList: \n$desired_ll')
 }
