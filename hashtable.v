@@ -38,6 +38,11 @@ fn (hs HashTable) hs_search(s string) ?string {
 }
 
 // hs_delete performs delete of element in hash table
+fn (mut hs HashTable) hs_delete(s string) ?HashTable {
+	idx := hash(s)
+	hs.arr[idx] = bucket_delete(hs.arr[idx], s) or { return error('Data $s not found') }
+	return hs
+}
 
 // Bucket is hash table node (linked list)
 type Bucket = BucketNode | Empty
@@ -82,6 +87,24 @@ fn bucket_search(b Bucket, val string) string {
 }
 
 // bucket_delete performs delete of element in the node
+fn bucket_delete(b Bucket, val string) ?&Bucket {
+	match b {
+		Empty {
+			return &BucketNode{val, Empty{}}
+		}
+		BucketNode {
+			if b.data == val {
+				return &BucketNode{
+					data: ''
+					link: Empty{}
+				}
+			} else {
+				bucket_delete(b.link, val) ?
+			}
+		}
+	}
+	return error('Data was not found')
+}
 
 fn hash(str string) int {
 	mut sum := 0
@@ -98,10 +121,18 @@ fn main() {
 	hs.hs_insert('coyote')
 	hs.hs_insert('moo')
 	hs.hs_insert('lurker')
+	println(hs)
+	println(' ')
+	println(' ')
 
 	result_1 := hs.hs_search('coyote') or { 'NotFound' }
 	result_2 := hs.hs_search('voodoo') or { 'NotFound' }
-	result_3 := hs.hs_search('yabadibadoo') or { 'NotFound' }
 	assert result_1 == 'coyote'
 	assert result_2 == 'NotFound'
+
+	hs.hs_delete('lurker') or {
+		println(err)
+		return
+	}
+	println(hs)
 }
