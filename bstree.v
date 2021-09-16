@@ -71,17 +71,97 @@ fn search_tree(t Tree, key int) bool {
 	}
 }
 
+fn min(t Tree) int {
+	match t {
+		Empty {
+			return 1 << 31 - 1
+		}
+		BSNode {
+			// replace Empty{} value by finding min in left subtree
+			return if t.key < min(t.left) { t.key } else { min(t.left) }
+		}
+	}
+}
+
+// delete performs recursive deletion of the key in the tree
+fn delete_key(t Tree, key int) Tree {
+	return match t {
+		Empty {
+			// reached end of the tree
+			t
+		}
+		BSNode {
+			// there is two children
+			if t.left is BSNode && t.right is BSNode {
+				if key == t.key {
+					// TODO: Get on how to run anonymous fns recursively
+					// function that finds min in the subtree
+					// min := fn (t Tree) int {
+					//	return match t {
+					//		Empty {
+					//			1 << 31 - 1
+					//		}
+					//		BSNode {
+					//			if t.key < min(t.left) { t.key } else { min(t.left) }
+					//		}
+					//	}
+					//}
+					BSNode{
+						...t
+						key: min(t.right)
+						right: delete_key(t.right, min(t.right))
+					}
+				} else if key < t.key {
+					BSNode{
+						...t
+						left: delete_key(t.left, key)
+					}
+				} else {
+					BSNode{
+						...t
+						right: delete_key(t.right, key)
+					}
+				}
+			} else if t.left is BSNode {
+				// only left child, t.right is Empty
+				if key == t.key {
+					t.left
+				} else {
+					BSNode{
+						...t
+						left: delete_key(t.left, key) // recursive deletion
+					}
+				}
+			} else {
+				// only right child, t.left is Empty
+				if key == t.key {
+					t.right
+				} else {
+					BSNode{
+						...t
+						right: delete_key(t.right, key) // recursive deletion
+					}
+				}
+			}
+		}
+	}
+}
+
 fn main() {
 	mut tree := Tree(Empty{})
-	keys := [100, 50, 150, 60, 180]
+	keys := [100, 50, 150, 40, 60, 140, 180]
 	for key in keys {
 		tree = insert_tree(tree, key)
 	}
-	desired_tree := Tree(BSNode{
+	mut desired_tree := Tree(BSNode{
 		key: 100
 		left: Tree(BSNode{
 			key: 50
-			left: Tree(Empty{})
+			left: Tree(BSNode{
+				key: 40
+				left: Tree(Empty{})
+				right: Tree(Empty{})
+			})
 			right: Tree(BSNode{
 				key: 60
 				left: Tree(Empty{})
@@ -90,7 +170,11 @@ fn main() {
 		})
 		right: Tree(BSNode{
 			key: 150
-			left: Tree(Empty{})
+			left: Tree(BSNode{
+				key: 140
+				left: Tree(Empty{})
+				right: Tree(Empty{})
+			})
 			right: Tree(BSNode{
 				key: 180
 				left: Tree(Empty{})
@@ -102,4 +186,32 @@ fn main() {
 
 	existing_key := 60
 	assert true == search_tree(desired_tree, existing_key)
+
+	tree = delete_key(tree, 150)
+	desired_tree = Tree(BSNode{
+		key: 100
+		left: Tree(BSNode{
+			key: 50
+			left: Tree(BSNode{
+				key: 40
+				left: Tree(Empty{})
+				right: Tree(Empty{})
+			})
+			right: Tree(BSNode{
+				key: 60
+				left: Tree(Empty{})
+				right: Tree(Empty{})
+			})
+		})
+		right: Tree(BSNode{
+			key: 180
+			left: Tree(BSNode{
+				key: 140
+				left: Tree(Empty{})
+				right: Tree(Empty{})
+			})
+			right: Tree(Empty{})
+		})
+	})
+	assert tree == desired_tree
 }
