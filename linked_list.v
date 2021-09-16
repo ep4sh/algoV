@@ -9,6 +9,7 @@ struct Empty {}
 
 // LLNode is struct which holds data and links
 struct LLNode {
+mut:
 	data int
 	link LinkedList
 }
@@ -46,6 +47,29 @@ fn prepend(ll LinkedList, val int) LinkedList {
 	}
 }
 
+fn get(ll LinkedList) LinkedList {
+	return ll
+}
+
+// delete performs removing of the value from the LinkedList
+fn delete(ll LinkedList, val int) LinkedList {
+	return match ll {
+		Empty {
+			ll
+		}
+		LLNode {
+			if ll.data == val {
+				LLNode{
+					...ll
+					link: get(ll.link)
+				}
+			} else {
+				delete(ll.link, val)
+			}
+		}
+	}
+}
+
 fn main() {
 	mut ll := LinkedList(Empty{})
 	ll = insert(ll, 997)
@@ -69,5 +93,10 @@ fn main() {
 	desired_ll = prepend(desired_ll, 123)
 
 	assert ll == desired_ll // compare prepended LinkedLists
-	println('Desired LinkedList: \n$desired_ll')
+	println('LinkedList: \n $ll')
+	println(' ')
+	println(' ')
+	println(' ')
+	ll = delete(ll, 997)
+	println('LinkedList: \n $ll')
 }
