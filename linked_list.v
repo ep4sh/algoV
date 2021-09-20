@@ -47,13 +47,6 @@ fn prepend(ll LinkedList, val int) LinkedList {
 	}
 }
 
-fn get(ll LinkedList) LinkedList {
-	if ll is LLNode {
-		return ll
-	}
-	return ll
-}
-
 // delete performs removing of the value from the LinkedList
 fn delete(ll LinkedList, val int) LinkedList {
 	return match ll {
