@@ -5,7 +5,7 @@
  * Distributed under terms of the MIT license.
 */
 
-const size = 3
+const size = 5
 
 // HashTable is hash table struct
 struct HashTable {
@@ -37,7 +37,12 @@ fn (hs HashTable) hs_search(s string) ?string {
 	return error("Key with data '$s' doesn't exist in HashTable")
 }
 
-// hs_delete performs delete of element in hash table
+// hs_delete performs idempotent-like delete of element in hash table
+fn (mut hs HashTable) hs_delete(s string) bool {
+	idx := hash(s)
+	hs.arr[idx] = bucket_delete(hs.arr[idx], s)
+	return true
+}
 
 // Bucket is hash table node (linked list)
 type Bucket = BucketNode | Empty
@@ -82,7 +87,25 @@ fn bucket_search(b Bucket, val string) string {
 }
 
 // bucket_delete performs delete of element in the node
+fn bucket_delete(b Bucket, val string) Bucket {
+	return match b {
+		Empty {
+			b
+		}
+		BucketNode {
+			if b.data == val {
+				b.link
+			} else {
+				BucketNode{
+					...b
+					link: bucket_delete(b.link, val)
+				}
+			}
+		}
+	}
+}
 
+// has returns very simple hash for particular key
 fn hash(str string) int {
 	mut sum := 0
 	for s in str {
@@ -101,7 +124,13 @@ fn main() {
 
 	result_1 := hs.hs_search('coyote') or { 'NotFound' }
 	result_2 := hs.hs_search('voodoo') or { 'NotFound' }
-	result_3 := hs.hs_search('yabadibadoo') or { 'NotFound' }
 	assert result_1 == 'coyote'
 	assert result_2 == 'NotFound'
+
+	hs.hs_delete('moo')
+	result_3 := hs.hs_search('moo') or { 'NotFound' }
+	result_4 := hs.hs_search('lurker') or { 'NotFound' }
+	assert result_3 == 'NotFound'
+	assert result_4 == 'lurker'
+	println(hs)
 }
