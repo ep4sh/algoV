@@ -48,6 +48,9 @@ fn prepend(ll LinkedList, val int) LinkedList {
 }
 
 fn get(ll LinkedList) LinkedList {
+	if ll is LLNode {
+		return ll
+	}
 	return ll
 }
 
@@ -59,12 +62,12 @@ fn delete(ll LinkedList, val int) LinkedList {
 		}
 		LLNode {
 			if ll.data == val {
+				ll.link
+			} else {
 				LLNode{
 					...ll
-					link: get(ll.link)
+					link: delete(ll.link, val)
 				}
-			} else {
-				delete(ll.link, val)
 			}
 		}
 	}
@@ -86,17 +89,19 @@ fn main() {
 			})
 		})
 	})
-
 	assert ll == desired_ll // compare two LinkedLists
 
 	ll = prepend(ll, 123)
 	desired_ll = prepend(desired_ll, 123)
-
 	assert ll == desired_ll // compare prepended LinkedLists
-	println('LinkedList: \n $ll')
-	println(' ')
-	println(' ')
-	println(' ')
+
+	ll = delete(ll, 993)
+	desired_ll = delete(desired_ll, 993) // key is missing
+	assert ll == desired_ll // compare unchanged LinkedLists
+
 	ll = delete(ll, 997)
+	desired_ll = delete(desired_ll, 997) // remove key in the middle of LL
+	assert ll == desired_ll // compare  LinkedLists
+
 	println('LinkedList: \n $ll')
 }
