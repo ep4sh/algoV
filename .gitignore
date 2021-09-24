@@ -7,9 +7,9 @@ algoV
 *.dylib
 *.dll
 algoV
-binary_search_tree
-hash_table
-linked_list
-queue
-stack
-trie
+binary_search_tree/binary_search_tree
+hash_table/hash_table
+linked_list/linked_list
+queue/queue
+stack/stack
+trie/trie
