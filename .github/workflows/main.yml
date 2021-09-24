@@ -24,38 +24,38 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
+
       - name: Build V Binary Search Tree
-        uses: nzbr/vlang-action@v1
+        uses: nzbr/vlang-action@v2
         with:
           file: binary_search_tree/binary_search_tree.v
 
       - name: Build V Hash Table
-        uses: nzbr/vlang-action@v1
+        uses: nzbr/vlang-action@v2
         with:
           file: hash_table/hash_table.v
 
       - name: Build V Hash Table
-        uses: nzbr/vlang-action@v1
+        uses: nzbr/vlang-action@v2
         with:
           file: hash_table/hash_table.v
-          
+
       - name: Build V Linked List
-        uses: nzbr/vlang-action@v1
+        uses: nzbr/vlang-action@v2
         with:
           file: linked_list/linked_list.v
-          
+
       - name: Build V FIFO Queue
-        uses: nzbr/vlang-action@v1
+        uses: nzbr/vlang-action@v2
         with:
           file: queue/queue.v
-          
+
       - name: Build V LIFO Stack
-        uses: nzbr/vlang-action@v1
+        uses: nzbr/vlang-action@v2
         with:
           file: stack/stack.v
-          
+
       - name: Build V Trie
-        uses: nzbr/vlang-action@v1
+        uses: nzbr/vlang-action@v2
         with:
           file: trie/trie.v

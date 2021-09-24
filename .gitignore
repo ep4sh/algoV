@@ -6,3 +6,10 @@ algoV
 *.so
 *.dylib
 *.dll
+algoV
+binary_search_tree
+hash_table
+linked_list
+queue
+stack
+trie
