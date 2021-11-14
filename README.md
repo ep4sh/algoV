@@ -14,6 +14,7 @@ algoV - the implementation of different algorithms and data structures with [V](
 ## Algorithms
 
 - [Binary Search](https://en.wikipedia.org/wiki/Binary_search_algorithm)
+- [Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
 
 
 ### Books
