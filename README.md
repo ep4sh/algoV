@@ -11,6 +11,11 @@ algoV - the implementation of different algorithms and data structures with [V](
 - [Stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type))
 - [Trie](https://en.wikipedia.org/wiki/Trie)
 
+## Algorithms
+
+- [Binary Search](https://en.wikipedia.org/wiki/Binary_search_algorithm)
+
+
 ### Books
 I'm in love with books. If you want to thank me, just help me to buy books from the list
 
