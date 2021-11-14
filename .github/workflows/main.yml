@@ -59,3 +59,13 @@ jobs:
         uses: nzbr/vlang-action@v2
         with:
           file: trie/trie.v
+
+      - name: Build V binary search
+        uses: nzbr/vlang-action@v2
+        with:
+          file: binary_search/binary_search.v
+
+      - name: Build V selection sort
+        uses: nzbr/vlang-action@v2
+        with:
+          file: selection_sort/selection_sort.v
