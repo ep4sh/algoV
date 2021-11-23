@@ -69,3 +69,8 @@ jobs:
         uses: nzbr/vlang-action@v2
         with:
           file: selection_sort/selection_sort.v
+
+      - name: Build V quick sort
+        uses: nzbr/vlang-action@v2
+        with:
+          file: quick_sort/quick_sort.v
